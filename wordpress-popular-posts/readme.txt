@@ -3,9 +3,9 @@ Contributors: hcabrera
 Donate link: https://ko-fi.com/cabrerahector
 Tags: popular, posts, widget, popularity, top
 Requires at least: 6.2
-Tested up to: 6.9
+Tested up to: 6.9.1
 Requires PHP: 7.4
-Stable tag: 7.3.6
+Stable tag: 7.3.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,10 @@ A highly customizable, easy-to-use popular posts plugin!
 == Description ==
 
 WP Popular Posts is a highly customizable plugin that displays your most popular posts.
+
+= PSA: Plugin has been renamed as WP Popular Posts! =
+
+See the [announcement](https://cabrerahector.com/wordpress/wordpress-popular-posts-renamed-to-wp-popular-posts/) for more details.
 
 = Main Features =
 * **Multiple Popular Posts Lists** - You can have several Popular Posts lists on your blog, each with its own settings!
@@ -112,9 +116,18 @@ The FAQ section has been moved [here](https://github.com/cabrerahector/wordpress
 
 == Changelog ==
 
-**If you're updating from a previous version please clear your popular posts thumbnails cache via WP Dashboard > Settings > WP Popular Posts > Tools > Thumbnails > Empty image cache button.**
+= 7.3.7 =
+
+- Fixes shortcode rendering empty tags (props to NetzzJD for the report!)
+- Renames filter hook pretiffy_numbers to prettify_numbers.
+- Adds toggle to display the Y-axis in the Stats chart.
+- Minor code improvements.
+
+[Release notes](https://cabrerahector.com/wordpress/wordpress-popular-posts-7-3-experimental-elementor-support/#7.3.7)
 
 = 7.3.6 =
+
+**If you're updating from a previous version please clear your popular posts thumbnails cache via WP Dashboard > Settings > WP Popular Posts > Tools > Thumbnails > Empty image cache button.**
 
 - Improves security around thumbnail generation (props to smile9381!)
 - Removes deprecated /v1/popular-posts POST endpoint.
