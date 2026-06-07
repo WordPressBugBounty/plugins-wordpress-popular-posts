@@ -1,5 +1,5 @@
 import icons from '../icons';
-import { WPPWidgetBlockEdit } from './edit/edit';
+import { WPPWidgetBlockEdit } from './edit';
 
 const { registerBlockType } = wp.blocks;
 const { __ } = wp.i18n;

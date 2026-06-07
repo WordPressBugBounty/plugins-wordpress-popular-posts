@@ -39,6 +39,7 @@ if ( isset($_POST['section']) ) {
         if ( isset($_POST['wpp-update-misc-options-token'] ) && wp_verify_nonce($_POST['wpp-update-misc-options-token'], 'wpp-update-misc-options') ) {
             $this->config['tools']['link']['target'] = '_blank' === $_POST['link_target'] ? '_blank' : '_self';
             $this->config['tools']['css'] = (bool) $_POST['css'];
+            $this->config['tools']['experimental'] = isset($_POST['experimental_features']);
 
             update_option('wpp_settings_config', $this->config);
             echo '<div class="notice notice-success is-dismissible"><p><strong>' . esc_html(__('Settings saved.', 'wordpress-popular-posts')) . '</strong></p></div>';
@@ -89,21 +90,6 @@ if ( isset($_POST['section']) ) {
             $this->config['tools']['log']['limit'] = (int) $_POST['log_limit'];
             $this->config['tools']['log']['expires_after'] = ( \WordPressPopularPosts\Helper::is_number($_POST['log_expire_time']) && $_POST['log_expire_time'] > 0 ) ? (int) $_POST['log_expire_time'] : 180;
             $this->config['tools']['ajax'] = (bool) $_POST['ajax'];
-            $this->config['tools']['views_column']['active'] = (bool) $_POST['views_column'];
-            $this->config['tools']['views_column']['post_types'] = '';
-
-            if ( is_array($_POST['views_column_post_types']) && ! empty($_POST['views_column_post_types']) ) {
-                $registered_post_types = get_post_types(['public' => true], 'names');
-
-                $post_types = array_values(
-                    array_intersect(
-                        $_POST['views_column_post_types'],
-                        $registered_post_types
-                    )
-                );
-
-                $this->config['tools']['views_column']['post_types'] = $post_types ? implode(',', $post_types) : '';
-            }
 
             // if any of the caching settings was updated, destroy all transients created by the plugin
             if (
@@ -143,8 +129,8 @@ if ( isset($_POST['section']) ) {
 
 <div class="wpp-wrapper wpp-section-<?php echo esc_attr($current); ?>">
     <div class="wpp-header">
-        <p>WP Popular Posts</p>
-        <h1><?php echo esc_html($wpp_tabs[$current]); ?></h1>
+        <h2>WP Popular Posts</h2>
+        <h3><?php echo esc_html($wpp_tabs[$current]); ?></h3>
     </div>
 
     <?php
