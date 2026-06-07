@@ -3,9 +3,9 @@ Contributors: hcabrera
 Donate link: https://ko-fi.com/cabrerahector
 Tags: popular, posts, widget, popularity, top
 Requires at least: 6.2
-Tested up to: 6.9.1
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 7.3.8
+Stable tag: 7.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -115,6 +115,17 @@ The FAQ section has been moved [here](https://github.com/cabrerahector/wordpress
 5. Statistics panel.
 
 == Changelog ==
+
+= 7.4.0 =
+
+- The Log Limit functionality is now enabled by default for new installs (see [Log Limit](https://cabrerahector.com/wordpress/wp-popular-posts-7-4-performance-impromevents-new-admin-views-column/#log-limit) for more details)
+- New "Views" column in posts lists (see [Views column](https://cabrerahector.com/wordpress/wp-popular-posts-7-4-performance-impromevents-new-admin-views-column/#views-column) for more)
+- Fixed a bug affecting the Custom time range functionality (props to dxylott54 for reporting the issue!)
+- Improved accessibility in the Stats screen.
+- Plugin has finally dropped all jQuery dependencies!
+- Other minor improvements.
+
+[Release notes](https://cabrerahector.com/wordpress/wp-popular-posts-7-4-performance-impromevents-new-admin-views-column/)
 
 = 7.3.8 =
 
