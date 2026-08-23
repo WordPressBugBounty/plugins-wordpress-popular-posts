@@ -1,11 +1,11 @@
 === WP Popular Posts ===
 Contributors: hcabrera
 Donate link: https://ko-fi.com/cabrerahector
-Tags: popular, posts, widget, popularity, top
+Tags: popular, posts, popularity, top, trending
 Requires at least: 6.2
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 7.4.0
+Stable tag: 7.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,15 +43,13 @@ See the [announcement](https://cabrerahector.com/wordpress/wordpress-popular-pos
 
 = PSA: The classic WP Popular Posts widget has reached End-of-Life =
 
-The classic WP Popular Posts widget doesn't work very well / at all with the [block-based Widgets editor](https://wordpress.org/documentation/article/block-based-widgets-editor/) introduced with WordPress 5.8.
+The classic WP Popular Posts widget doesn't work very well with the [block-based Widgets editor](https://wordpress.org/documentation/article/block-based-widgets-editor/) introduced with WordPress 5.8.
 
-This new Widgets editor expects [WordPress blocks](https://wordpress.org/documentation/article/blocks-list/) instead of regular WordPress widgets. If you're using the classic WP Popular Posts widget please replace it with the [WP Popular Posts block](https://cabrerahector.com/wordpress/wordpress-popular-posts-5-3-improved-php-8-support-retina-display-support-and-more/#block-editor-support) instead - it has the same features and functionality as the "classic" widget so you won't be missing anything at all. See the [Migration Guide](https://cabrerahector.com/wordpress/migrating-from-the-classic-popular-posts-widget/) for more details.
+This new Widgets editor expects [WordPress blocks](https://wordpress.org/documentation/article/blocks-list/) instead of regular WordPress widgets. If you're using the classic WP Popular Posts widget please follow the [Migration Guide](https://cabrerahector.com/wordpress/migrating-from-the-classic-popular-posts-widget/) to replace it with the WP Popular Posts block, the [wpp] shortcode, or the WP Popular Posts widget for Elementor.
 
 Bjorn from wplearninglab.com was kind enough to create a video explaining how to use the new block for all of you visual learners:
 
 [youtube https://www.youtube.com/watch?v=mtzk6yNEaFs]
-
-If you cannot (or do not want to) use WordPress blocks on your website then please replace your classic widget with the [[wpp] shortcode](https://github.com/cabrerahector/wordpress-popular-posts/wiki/1.-Using-WPP-on-posts-&-pages#the-wpp-shortcode).
 
 = Support the Project! =
 
@@ -116,6 +114,14 @@ The FAQ section has been moved [here](https://github.com/cabrerahector/wordpress
 
 == Changelog ==
 
+= 7.4.1 =
+
+- Only administrators can have access to plugin's management screens now (props to @gamefa!)
+- Improved compatibility with Site Optimizer.
+- Various minor fixes and improvements.
+
+[Release notes](https://cabrerahector.com/wordpress/wp-popular-posts-7-4-performance-impromevents-new-admin-views-column/#7.4.1)
+
 = 7.4.0 =
 
 - The Log Limit functionality is now enabled by default for new installs (see [Log Limit](https://cabrerahector.com/wordpress/wp-popular-posts-7-4-performance-impromevents-new-admin-views-column/#log-limit) for more details)
@@ -126,85 +132,6 @@ The FAQ section has been moved [here](https://github.com/cabrerahector/wordpress
 - Other minor improvements.
 
 [Release notes](https://cabrerahector.com/wordpress/wp-popular-posts-7-4-performance-impromevents-new-admin-views-column/)
-
-= 7.3.8 =
-
-- Fixes a character encoding issue that can happen under some circumstances (props to qwe987299 for the report!)
-
-[Release notes](https://cabrerahector.com/wordpress/wordpress-popular-posts-7-3-experimental-elementor-support/#7.3.8)
-
-= 7.3.7 =
-
-- Fixes shortcode rendering empty tags (props to NetzzJD for the report!)
-- Renames filter hook pretiffy_numbers to prettify_numbers.
-- Adds toggle to display the Y-axis in the Stats chart.
-- Minor code improvements.
-
-[Release notes](https://cabrerahector.com/wordpress/wordpress-popular-posts-7-3-experimental-elementor-support/#7.3.7)
-
-= 7.3.6 =
-
-**If you're updating from a previous version please clear your popular posts thumbnails cache via WP Dashboard > Settings > WP Popular Posts > Tools > Thumbnails > Empty image cache button.**
-
-- Improves security around thumbnail generation (props to smile9381!)
-- Removes deprecated /v1/popular-posts POST endpoint.
-- Minimum required PHP version is now 7.4.
-- Minor code improvements.
-
-[Release notes](https://cabrerahector.com/wordpress/wordpress-popular-posts-7-3-experimental-elementor-support/#7.3.6)
-
-= 7.3.5 =
-
-- Fixes Elementor widget stuck in infinite loading animation.
-- Fixes broken database query in get_views() (props to raphaelw!)
-- Fixes an issue where config.json files from theme overrides would be ignored (thanks alexg904!)
-- Minor styling enhancements.
-
-[Release notes](https://cabrerahector.com/wordpress/wordpress-popular-posts-7-3-experimental-elementor-support/#7.3.5)
-
-= 7.3.4 =
-
-- New name! See the [Rename announcement](https://cabrerahector.com/wordpress/wordpress-popular-posts-renamed-to-wp-popular-posts/) for more details.
-- Minimum required WordPress version is now 6.2.
-- Minor code improvements.
-
-[Release notes](https://cabrerahector.com/wordpress/wordpress-popular-posts-7-3-experimental-elementor-support/#7.3.4)
-
-= 7.3.3 =
-
-- Hotfix: wpp shortcode no longer forces AJAX loading on.
-
-[Release notes](https://cabrerahector.com/wordpress/wordpress-popular-posts-7-3-experimental-elementor-support/#7.3.3)
-
-= 7.3.2 =
-
-- Compatibility: Fixes a fatal error that can happen when using Polylang.
-- Compatibility: Themes should now work with WP-Rocket.
-- New notice about Pretty Permalinks being required has been added.
-- Fixes shortcode getting stuck on the loading animation in Elementor's editor.
-
-[Release notes](https://cabrerahector.com/wordpress/wordpress-popular-posts-7-3-experimental-elementor-support/#7.3.2)
-
-= 7.3.1 =
-
-- Fixes wpp_start/end being striped out if empty (props to ispreview!)
-- Fixes posts not loading on the Stats screen for Author users (props to waheed61!)
-
-[Release notes](https://cabrerahector.com/wordpress/wordpress-popular-posts-7-3-experimental-elementor-support/#7.3.1)
-
-= 7.3.0 =
-
-**If you're using a caching plugin and/or a plugin that minifies JavaScript code it's highly recommended to clear its cache after installing / updating to this version.**
-
-- Adds Elementor support: WordPress Popular Posts now includes a native Elementor widget! See [Release notes](https://cabrerahector.com/wordpress/wordpress-popular-posts-7-3-experimental-elementor-support/) for more details.
-- Adds [get_ids()](https://github.com/cabrerahector/wordpress-popular-posts/wiki/2.-Template-tags#wpp_get_ids) function to facilitate getting the IDs of your popular posts.
-- Admin section usability improvements.
-- The "Empty cache" and "Clear all data" buttons have been removed from the Admin section.
-- Improves compatibility with PHP 8.4 (thanks ispreview for the heads-up!)
-- Minimum required PHP version is now 7.3.
-- Minor code changes & improvements.
-
-[Release notes](https://cabrerahector.com/wordpress/wordpress-popular-posts-7-3-experimental-elementor-support/)
 
 [Full Changelog](https://github.com/cabrerahector/wordpress-popular-posts/blob/master/changelog.md)
 
