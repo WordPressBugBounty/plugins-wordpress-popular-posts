@@ -5,7 +5,7 @@ Tags: popular, posts, popularity, top, trending
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 7.4.1
+Stable tag: 7.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,13 @@ The FAQ section has been moved [here](https://github.com/cabrerahector/wordpress
 5. Statistics panel.
 
 == Changelog ==
+
+= 7.4.2 =
+
+- Fixes a problem where the taxonomy fields were not working within the WP Popular Posts block. (props to @JRMora!)
+- Updates dependencies.
+
+[Release notes](https://cabrerahector.com/wordpress/wp-popular-posts-7-4-performance-impromevents-new-admin-views-column/#7.4.2)
 
 = 7.4.1 =
 
