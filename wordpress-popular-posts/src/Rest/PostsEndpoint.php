@@ -9,16 +9,28 @@ class PostsEndpoint extends Endpoint {
     use QueriesPosts;
 
     /**
+     * Post types we are allowed to query.
+     *
+     * @access  private
+     * @param   array
+     * @since   7.4.3
+     */
+    private array $allowed_post_types = [];
+
+    /**
      * Initializes class.
      *
      * @param   array
      * @param   \WordPressPopularPosts\Translate
-     * @param   \WordPressPopularPosts\Output
      */
     public function __construct(array $config, Translate $translate)
     {
         $this->config = $config;
         $this->translate = $translate;
+        $this->allowed_post_types = get_post_types([
+            'public' => true,
+            'show_in_rest' => true
+        ]);
     }
 
     /**
@@ -50,6 +62,15 @@ class PostsEndpoint extends Endpoint {
      */
     public function get_items($request)
     {
+        // This endpoint doesn't have any use for the context param
+        // so let's drop it if present in the request
+        //
+        // WP will then default to 'view' context which is
+        // the expected behavior
+        if ( $request->offsetExists('context') ) {
+            $request->offsetUnset('context');
+        }
+
         $params = $request->get_params();
         $lang = isset($params['lang']) ? $params['lang'] : null;
         $popular_posts = [];
@@ -92,7 +113,7 @@ class PostsEndpoint extends Endpoint {
         $wp_post = get_post($post_ID);
 
         // Borrow prepare_item_for_response method from WP_REST_Posts_Controller.
-        $posts_controller = new \WP_REST_Posts_Controller($wp_post->post_type, $request);
+        $posts_controller = new \WP_REST_Posts_Controller($wp_post->post_type);
         $data = $posts_controller->prepare_item_for_response($wp_post, $request);
 
         // Add pageviews from popular_post object to response.
@@ -112,14 +133,25 @@ class PostsEndpoint extends Endpoint {
     {
         return [
             'post_type' => [
-                'description'       => __('Return popular posts from specified custom post type(s).'),
+                'description'       => 'Return popular posts from specified custom post type(s).',
                 'type'              => 'string',
                 'default'           => 'post',
-                'sanitize_callback' => 'sanitize_text_field',
+                'sanitize_callback' => function($post_type) {
+                    $post_type = implode(',', array_intersect(
+                        $this->allowed_post_types,
+                        array_filter(array_map('trim', explode(',', $post_type)))
+                    ));
+
+                    if ( ! $post_type ) {
+                        $post_type = 'post'; // same as 'default'
+                    }
+
+                    return $post_type;
+                },
                 'validate_callback' => 'rest_validate_request_arg',
             ],
             'limit' => [
-                'description'       => __('The maximum number of popular posts to return.'),
+                'description'       => 'The maximum number of popular posts to return.',
                 'type'              => 'integer',
                 'default'           => 10,
                 'sanitize_callback' => 'absint',
@@ -127,7 +159,7 @@ class PostsEndpoint extends Endpoint {
                 'minimum'           => 1,
             ],
             'freshness' => [
-                'description'       => __('Retrieve the most popular entries published within the specified time range.'),
+                'description'       => 'Retrieve the most popular entries published within the specified time range.',
                 'type'              => 'string',
                 'enum'              => ['0', '1'],
                 'default'           => '0',
@@ -135,7 +167,7 @@ class PostsEndpoint extends Endpoint {
                 'validate_callback' => 'rest_validate_request_arg',
             ],
             'offset' => [
-                'description'       => __('An offset point for the collection.'),
+                'description'       => 'An offset point for the collection.',
                 'type'              => 'integer',
                 'default'           => 0,
                 'minimum'           => 0,
@@ -143,7 +175,7 @@ class PostsEndpoint extends Endpoint {
                 'validate_callback' => 'rest_validate_request_arg',
             ],
             'order_by' => [
-                'description'       => __('Set the sorting option of the popular posts.'),
+                'description'       => 'Set the sorting option of the popular posts.',
                 'type'              => 'string',
                 'enum'              => ['views', 'comments'],
                 'default'           => 'views',
@@ -151,7 +183,7 @@ class PostsEndpoint extends Endpoint {
                 'validate_callback' => 'rest_validate_request_arg',
             ],
             'range' => [
-                'description'       => __('Return popular posts from a specified time range.'),
+                'description'       => 'Return popular posts from a specified time range.',
                 'type'              => 'string',
                 'enum'              => ['last24hours', 'last7days', 'last30days', 'all', 'custom'],
                 'default'           => 'last24hours',
@@ -159,7 +191,7 @@ class PostsEndpoint extends Endpoint {
                 'validate_callback' => 'rest_validate_request_arg',
             ],
             'time_unit' => [
-                'description'       => __('Specifies the time unit of the custom time range.'),
+                'description'       => 'Specifies the time unit of the custom time range.',
                 'type'              => 'string',
                 'enum'              => ['minute', 'hour', 'day', 'week', 'month'],
                 'default'           => 'hour',
@@ -167,7 +199,7 @@ class PostsEndpoint extends Endpoint {
                 'validate_callback' => 'rest_validate_request_arg',
             ],
             'time_quantity' => [
-                'description'       => __('Specifies the number of time units of the custom time range.'),
+                'description'       => 'Specifies the number of time units of the custom time range.',
                 'type'              => 'integer',
                 'default'           => 24,
                 'minimum'           => 1,
@@ -175,7 +207,7 @@ class PostsEndpoint extends Endpoint {
                 'validate_callback' => 'rest_validate_request_arg',
             ],
             'pid' => [
-                'description'       => __('Post IDs to exclude from the listing.'),
+                'description'       => 'Post IDs to exclude from the listing.',
                 'type'              => 'string',
                 'sanitize_callback' => function($pid) {
                     return rtrim(preg_replace('|[^0-9,]|', '', $pid), ',');
@@ -183,7 +215,7 @@ class PostsEndpoint extends Endpoint {
                 'validate_callback' => 'rest_validate_request_arg',
             ],
             'exclude' => [
-                'description'       => __('Post IDs to exclude from the listing.'),
+                'description'       => 'Post IDs to exclude from the listing.',
                 'type'              => 'string',
                 'sanitize_callback' => function($exclude) {
                     return rtrim(preg_replace('|[^0-9,]|', '', $exclude), ',');
@@ -191,7 +223,7 @@ class PostsEndpoint extends Endpoint {
                 'validate_callback' => 'rest_validate_request_arg',
             ],
             'taxonomy' => [
-                'description'       => __('Include posts in a specified taxonomy.'),
+                'description'       => 'Include posts in a specified taxonomy.',
                 'type'              => 'string',
                 'sanitize_callback' => function($taxonomy) {
                     return empty($taxonomy) ? 'category' : $taxonomy;
@@ -199,7 +231,7 @@ class PostsEndpoint extends Endpoint {
                 'validate_callback' => 'rest_validate_request_arg',
             ],
             'term_id' => [
-                'description'       => __('Taxonomy IDs, separated by comma (prefix a minus sign to exclude).'),
+                'description'       => 'Taxonomy IDs, separated by comma (prefix a minus sign to exclude).',
                 'type'              => 'string',
                 'sanitize_callback' => function($term_id) {
                     return rtrim(preg_replace('|[^0-9,;-]|', '', $term_id), ',');
@@ -207,7 +239,7 @@ class PostsEndpoint extends Endpoint {
                 'validate_callback' => 'rest_validate_request_arg',
             ],
             'author' => [
-                'description'       => __('Include popular posts from author ID(s).'),
+                'description'       => 'Include popular posts from author ID(s).',
                 'type'              => 'string',
                 'sanitize_callback' => function($author) {
                     return rtrim(preg_replace('|[^0-9,]|', '', $author), ',');

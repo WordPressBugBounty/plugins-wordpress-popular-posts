@@ -3,9 +3,9 @@ Contributors: hcabrera
 Donate link: https://ko-fi.com/cabrerahector
 Tags: popular, posts, popularity, top, trending
 Requires at least: 6.2
-Tested up to: 7.1
+Tested up to: 7.1.2
 Requires PHP: 7.4
-Stable tag: 7.4.2
+Stable tag: 7.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,14 @@ The FAQ section has been moved [here](https://github.com/cabrerahector/wordpress
 5. Statistics panel.
 
 == Changelog ==
+
+= 7.4.3 =
+
+- Fixes a build issue affecting version 7.4.2.
+- Improved REST API endpoints validation rules (props to the Wordfence team!)
+- PHPCS / WPCS improvements.
+
+[Release notes](https://cabrerahector.com/wordpress/wp-popular-posts-7-4-performance-impromevents-new-admin-views-column/#7.4.3)
 
 = 7.4.2 =
 
